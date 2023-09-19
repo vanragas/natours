@@ -3,6 +3,10 @@
   "version": "1.0.0",
   "description": "Learning node, express and mongoDB",
   "main": "app.js",
+  "targets": {
+    "main": false
+  },
+  "browserslist": "> 0.5%, last 2 versions, not dead",
   "scripts": {
     "start": "nodemon server.js",
     "prod": "SET NODE_ENV=production&&nodemon server.js",
@@ -50,5 +54,8 @@
     "eslint-plugin-prettier": "^5.0.0",
     "eslint-plugin-react": "^7.33.2",
     "prettier": "^3.0.2"
+  },
+  "engines": {
+    "node": ">=14 <15"
   }
 }

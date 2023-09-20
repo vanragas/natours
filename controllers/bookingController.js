@@ -38,7 +38,7 @@ exports.getCheckoutSession = catchAsync(async (req, res, next) => {
         quantity: 1,
       },
     ],
-    // mode: 'payment',
+    mode: 'payment',
   });
 
   // 3) Create session as response

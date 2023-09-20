@@ -47,7 +47,27 @@ app.use(express.static(path.join(__dirname, 'public')));
 // Set security HTTP headers
 // app.use(helmet());
 
-app.use(helmet({ contentSecurityPolicy: false }));
+// app.use(helmet({ contentSecurityPolicy: false }));
+app.use(
+  helmet.contentSecurityPolicy({
+    directives: {
+      defaultSrc: ["'self'"],
+      connectSrc: ["'self'", 'https://*.stripe.com', 'api.maptiler.com'],
+      scriptSrc: ["'self'", 'https://*.stripe.com', "'unsafe-inline'"],
+      styleSrc: [
+        "'self'",
+        "'unsafe-inline'",
+        'cdn.maptiler.com',
+        'fonts.googleapis.com',
+      ],
+      imgSrc: ["'self'", 'data:', 'https://api.maptiler.com'],
+      fontSrc: ["'self'", 'fonts.googleapis.com', 'fonts.gstatic.com'],
+      frameSrc: ["'self'", 'https://*.stripe.com'],
+      workerSrc: ["'self'", 'blob:'],
+      // Add more directives as needed
+    },
+  }),
+);
 
 // Development logging
 if (process.env.NODE_ENV === 'development') app.use(morgan('dev'));

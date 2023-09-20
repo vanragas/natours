@@ -23678,6 +23678,30 @@ uniform ${i3} ${s3} u_${a3};
     }
   };
 
+  // public/js/signup.js
+  var signup = async (name, email, password, passwordConfirm) => {
+    try {
+      const res = await axios_default({
+        method: "POST",
+        url: "/api/v1/users/signup",
+        data: {
+          name,
+          email,
+          password,
+          passwordConfirm
+        }
+      });
+      if (res.data.status === "success") {
+        showAlert("success", "Account created and logged in successfully");
+        window.setTimeout(() => {
+          location.assign("/");
+        }, 1500);
+      }
+    } catch (err) {
+      showAlert("error", err.response.data.message);
+    }
+  };
+
   // public/js/index.js
   var mapBox = document.getElementById("map");
   var loginForm = document.querySelector(".form--login");
@@ -23685,6 +23709,7 @@ uniform ${i3} ${s3} u_${a3};
   var userDataForm = document.querySelector(".form-user-data");
   var userPasswordForm = document.querySelector(".form-user-password");
   var bookBtn = document.getElementById("book-tour");
+  var signupForm = document.querySelector(".form--signup");
   if (mapBox) {
     const locations = JSON.parse(mapBox.dataset.locations);
     displayMap(locations);
@@ -23698,6 +23723,16 @@ uniform ${i3} ${s3} u_${a3};
     });
   if (logoutBtn)
     logoutBtn.addEventListener("click", logout);
+  if (signupForm) {
+    signupForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const name = document.getElementById("name").value;
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
+      const confirmPassword = document.getElementById("password-confirm").value;
+      signup(name, email, password, confirmPassword);
+    });
+  }
   if (userDataForm)
     userDataForm.addEventListener("submit", (e) => {
       e.preventDefault();
